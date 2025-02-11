@@ -1,0 +1,73 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2818
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 package com.example.notificationdemo;\
+\
+import android.app.NotificationChannel;\
+import android.app.NotificationManager;\
+import android.os.Build;\
+import android.os.Bundle;\
+import android.view.View;\
+import android.widget.Button;\
+import androidx.appcompat.app.AppCompatActivity;\
+import androidx.core.app.NotificationCompat;\
+import androidx.core.app.NotificationManagerCompat;\
+\
+public class MainActivity extends AppCompatActivity \{\
+\
+    private static final String CHANNEL_ID = "simple_notification";\
+\
+    @Override\
+    protected void onCreate(Bundle savedInstanceState) \{\
+        super.onCreate(savedInstanceState);\
+        setContentView(R.layout.activity_main);\
+\
+        // Create Notification Channel (Android 8.0+)\
+        createNotificationChannel();\
+\
+        // Find Button\
+        Button notifyButton = findViewById(R.id.notifyButton);\
+\
+        notifyButton.setOnClickListener(new View.OnClickListener() \{\
+            @Override\
+            public void onClick(View v) \{\
+                showNotification();\
+            \}\
+        \});\
+    \}\
+\
+    // Method to Create Notification Channel\
+    private void createNotificationChannel() \{\
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) \{\
+            NotificationChannel channel = new NotificationChannel(\
+                    CHANNEL_ID,\
+                    "Demo Notifications",\
+                    NotificationManager.IMPORTANCE_DEFAULT\
+            );\
+            channel.setDescription("Channel for simple notification demo");\
+\
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);\
+            if (notificationManager != null) \{\
+                notificationManager.createNotificationChannel(channel);\
+            \}\
+        \}\
+    \}\
+\
+    // Method to Show Notification\
+    private void showNotification() \{\
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)\
+                .setSmallIcon(R.drawable.ic_launcher_foreground) // Ensure you have an icon in res/drawable\
+                .setContentTitle("Simple Notification")\
+                .setContentText("This is a basic notification example!")\
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)\
+                .setAutoCancel(true); // Dismiss on tap\
+\
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);\
+        notificationManager.notify(1, builder.build()); // Show Notification\
+    \}\
+\}\
+}

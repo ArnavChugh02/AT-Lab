@@ -1,0 +1,78 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2818
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 package com.example.colorchanger;\
+\
+import android.graphics.Color;\
+import android.os.Bundle;\
+import android.view.View;\
+import android.widget.AdapterView;\
+import android.widget.ArrayAdapter;\
+import android.widget.LinearLayout;\
+import android.widget.Spinner;\
+import androidx.appcompat.app.AppCompatActivity;\
+\
+public class MainActivity extends AppCompatActivity \{\
+\
+    private LinearLayout mainLayout;\
+\
+    @Override\
+    protected void onCreate(Bundle savedInstanceState) \{\
+        super.onCreate(savedInstanceState);\
+        setContentView(R.layout.activity_main);\
+\
+        // Find Views\
+        mainLayout = findViewById(R.id.mainLayout);\
+        Spinner colorSpinner = findViewById(R.id.spinnerColors);\
+\
+        // Color Options\
+        final String[] colors = \{"White", "Red", "Blue", "Green", "Yellow", "Gray", "Black"\};\
+\
+        // Spinner Adapter\
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, colors);\
+        colorSpinner.setAdapter(adapter);\
+\
+        // Change Background on Selection\
+        colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() \{\
+            @Override\
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) \{\
+                String selectedColor = colors[position];\
+                changeBackgroundColor(selectedColor);\
+            \}\
+\
+            @Override\
+            public void onNothingSelected(AdapterView<?> parent) \{\}\
+        \});\
+    \}\
+\
+    // Method to Change Background Color\
+    private void changeBackgroundColor(String color) \{\
+        switch (color) \{\
+            case "Red":\
+                mainLayout.setBackgroundColor(Color.RED);\
+                break;\
+            case "Blue":\
+                mainLayout.setBackgroundColor(Color.BLUE);\
+                break;\
+            case "Green":\
+                mainLayout.setBackgroundColor(Color.GREEN);\
+                break;\
+            case "Yellow":\
+                mainLayout.setBackgroundColor(Color.YELLOW);\
+                break;\
+            case "Gray":\
+                mainLayout.setBackgroundColor(Color.GRAY);\
+                break;\
+            case "Black":\
+                mainLayout.setBackgroundColor(Color.BLACK);\
+                break;\
+            default:\
+                mainLayout.setBackgroundColor(Color.WHITE);\
+        \}\
+    \}\
+\}\
+}
